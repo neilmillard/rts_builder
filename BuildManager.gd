@@ -33,6 +33,8 @@ func _process(delta):
 				var obj := CurrentSpawnable.duplicate()
 				get_tree().root.add_child(obj)
 				obj.ActiveBuildableObject = false
+				obj.runSpawn()
+				obj.SetDisabled(false)
 				obj.translation = CurrentSpawnable.translation
 	pass
 
@@ -46,6 +48,7 @@ func SpawnObj(obj):
 	if CurrentSpawnable != null:
 		CurrentSpawnable.queue_free()
 	CurrentSpawnable = obj.instance()
+	CurrentSpawnable.SetDisabled(true)
 	get_tree().root.add_child(CurrentSpawnable)
 	GameManager.CurrentState = GameManager.State.Build
 	

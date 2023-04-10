@@ -25,6 +25,7 @@ func runSpawn():
 		var actor = Actor.instance()
 		get_tree().root.add_child(actor)
 		actor.global_translation = $SpawnPoint.global_translation
+		actor.Hut = $SpawnPoint.global_translation
 
 func _on_Area_area_entered(area):
 	if ActiveBuildableObject:
@@ -36,3 +37,7 @@ func _on_Area_area_exited(area):
 		objects.remove(objects.find(area))
 		if(objects.size() <= 0):
 			BuildManager.AbleToBuild = true
+
+func SetDisabled(disabled : bool):
+	$collisionShape2.disabled = disabled
+	
