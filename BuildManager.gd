@@ -28,26 +28,51 @@ func _process(delta):
 		var cursorPos = Plane(Vector3.UP, transform.origin.y).intersects_ray(from, to)
 		CurrentSpawnable.translation = Vector3(round(cursorPos.x), cursorPos.y, round(cursorPos.z))
 		CurrentSpawnable.ActiveBuildableObject = true
-		if AbleToBuild:
+		if AbleToBuild && canAfford(CurrentSpawnable):
 			if Input.is_action_just_released("LeftMouseButton"):
 				var obj := CurrentSpawnable.duplicate()
 				get_tree().root.add_child(obj)
 				obj.ActiveBuildableObject = false
 				obj.runSpawn()
+				obj.spawned = true
+				ChargeObject(obj)
 				obj.SetDisabled(false)
 				obj.translation = CurrentSpawnable.translation
 	pass
 
+func canAfford(obj) -> bool:
+	if GameManager.Wood - obj.WoodCost < 0:
+		return false
+	if GameManager.Stone - obj.StoneCost < 0:
+		return false
+	if GameManager.Gold - obj.GoldCost < 0:
+		return false
+	if GameManager.Iron - obj.IronCost < 0:
+		return false
+	return true
+	
+func ChargeObject(obj):
+	GameManager.Wood -= obj.WoodCost
+	GameManager.Stone -= obj.StoneCost
+	GameManager.Gold -= obj.GoldCost
+	GameManager.Iron -= obj.IronCost
+	
+	
 func SpawnWoodcutter():
 	SpawnObj(WoodCuttersHut)
 	
 func SpawnStoneCutter():
 	SpawnObj(StoneCuttersHut)
+	
+func SpawnStockPile():
+	SpawnObj(Stockpile)
 
 func SpawnObj(obj):
 	if CurrentSpawnable != null:
 		CurrentSpawnable.queue_free()
 	CurrentSpawnable = obj.instance()
+	if CurrentSpawnable == null:
+		print("Current Spawn is null!!")
 	CurrentSpawnable.SetDisabled(true)
 	get_tree().root.add_child(CurrentSpawnable)
 	GameManager.CurrentState = GameManager.State.Build

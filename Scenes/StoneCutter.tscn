@@ -6,10 +6,11 @@
 
 [sub_resource type="CapsuleMesh" id=2]
 
-[node name="WoodCutter" type="KinematicBody"]
+[node name="StoneCutter" type="KinematicBody"]
 script = ExtResource( 1 )
-ResourceGenerationAmount = 5
-ResourceNameToGet = "tree"
+WalkSpeed = 2
+ResourceGenerationAmount = 10
+ResourceNameToGet = "stone"
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.53214, 0 )

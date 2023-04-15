@@ -6,7 +6,13 @@ extends StaticBody
 # var b = "text"
 var objects : Array
 var ActiveBuildableObject : bool
+var spawned : bool
 
+export var WoodCost : int
+export var StoneCost : int
+export var IronCost : int
+export var GoldCost : int
+export var PopulationCost : int
 export var SpawnActor : bool = true
 export var Actor : PackedScene
 
@@ -39,5 +45,5 @@ func _on_Area_area_exited(area):
 			BuildManager.AbleToBuild = true
 
 func SetDisabled(disabled : bool):
-	$collisionShape2.disabled = disabled
+	$CollisionShape.disabled = disabled
 	
