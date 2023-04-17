@@ -48,11 +48,9 @@ func _on_BuildStoneCutterButton_button_down():
 	BuildManager.SpawnStoneCutter()
 	pass # Replace with function body.
 
-
 func _on_BuildIronWorker_button_down():
 	BuildManager.SpawnIronWorker()
 	pass # Replace with function body.
-
 
 func _on_BuildGranary_button_down():
 	BuildManager.SpawnGranary()

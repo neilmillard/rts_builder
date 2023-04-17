@@ -8,6 +8,7 @@ var WoodCuttersHut: PackedScene = ResourceLoader.load("res://Assets/WoodCutters.
 var StoneCuttersHut: PackedScene = ResourceLoader.load("res://Assets/StoneMasons.tscn")
 var Granary: PackedScene = ResourceLoader.load("res://Assets/Granary.tscn")
 var Stockpile: PackedScene = ResourceLoader.load("res://Assets/Stockpile.tscn")
+var IronWorks: PackedScene = ResourceLoader.load("res://Assets/WoodCutters.tscn")
 var House: PackedScene = ResourceLoader.load("res://Assets/House.tscn")
 var Wall: PackedScene = ResourceLoader.load("res://Assets/wallNarrow.tscn")
 var CornerWall: PackedScene = ResourceLoader.load("res://Assets/wallNarrowCorner.tscn")
@@ -66,6 +67,22 @@ func SpawnStoneCutter():
 	
 func SpawnStockPile():
 	SpawnObj(Stockpile)
+	
+func SpawnIronWorker():
+	SpawnObj(IronWorks)
+
+func SpawnGranary():
+	SpawnObj(Granary)
+
+func SpawnOrchard():
+	SpawnObj(Orchard)
+
+func SpawnHouse():
+	SpawnObj(House)
+
+func SpawnNarrowWall():
+	SpawnObj(Wall)
+
 
 func SpawnObj(obj):
 	if CurrentSpawnable != null:
