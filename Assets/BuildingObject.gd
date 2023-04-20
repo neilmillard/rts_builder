@@ -13,8 +13,13 @@ export var StoneCost : int
 export var IronCost : int
 export var GoldCost : int
 export var PopulationCost : int
+export var IncreasePopCap : bool = false
+export var IncreaseCapAmount := 5
+
 export var SpawnActor : bool = true
 export var Actor : PackedScene
+
+var currentActor
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,9 +34,21 @@ func _ready():
 func runSpawn():
 	if SpawnActor:
 		var actor = Actor.instance()
+		currentActor = actor
 		get_tree().root.add_child(actor)
 		actor.global_translation = $SpawnPoint.global_translation
 		actor.Hut = $SpawnPoint.global_translation
+	if IncreasePopCap:
+		GameManager.MaxPopulation += IncreaseCapAmount
+	GameManager.RemoveCitizen(PopulationCost)
+
+func runDespawn():
+	if SpawnActor:
+		currentActor.queue_free()
+	GameManager.Population -= PopulationCost
+	if IncreasePopCap:
+		GameManager.MaxPopulation -= IncreaseCapAmount
+	queue_free()
 
 func _on_Area_area_entered(area):
 	if ActiveBuildableObject:

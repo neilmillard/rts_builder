@@ -78,6 +78,8 @@ transform = Transform( 9.379, 0, 0, 0, 9.379, 0, 0, 0, 9.379, 0, 0, 0 )
 collision_layer = 129
 collision_mask = 129
 script = ExtResource( 6 )
+WoodCost = 15
+StoneCost = 5
 
 [node name="tmpParent" type="Spatial" parent="."]
 

@@ -20,7 +20,7 @@ func _process(delta):
 	$Control/VBoxContainer/Iron/IronValue.text = str(GameManager.Iron)
 	$Control/VBoxContainer/Food/FoodValue.text = str(GameManager.Food)
 	$Control/VBoxContainer/Gold/GoldValue.text = str(GameManager.Gold)
-	
+	$Control/VBoxContainer2/Pop/PopValue.text = str(GameManager.AvailablePopulation) + " / " + str(GameManager.MaxPopulation)
 	pass
 
 
@@ -68,3 +68,7 @@ func _on_BuildWallNarrow_button_down():
 	BuildManager.SpawnNarrowWall()
 	pass # Replace with function body.
 
+
+func _on_DestroyMode_button_down():
+	GameManager.CurrentState = GameManager.State.Destroying
+	pass # Replace with function body.

@@ -29,7 +29,7 @@ func _process(delta):
 		var cursorPos = Plane(Vector3.UP, transform.origin.y).intersects_ray(from, to)
 		CurrentSpawnable.translation = Vector3(round(cursorPos.x), cursorPos.y, round(cursorPos.z))
 		CurrentSpawnable.ActiveBuildableObject = true
-		if AbleToBuild && canAfford(CurrentSpawnable):
+		if AbleToBuild && canAfford(CurrentSpawnable) && GameManager.AvailablePopulation >= CurrentSpawnable.PopulationCost:
 			if Input.is_action_just_released("LeftMouseButton"):
 				var obj := CurrentSpawnable.duplicate()
 				get_tree().root.add_child(obj)
@@ -39,6 +39,24 @@ func _process(delta):
 				ChargeObject(obj)
 				obj.SetDisabled(false)
 				obj.translation = CurrentSpawnable.translation
+		
+		if Input.is_action_just_released("RightMouseButton"):
+			CurrentSpawnable.queue_free()
+			CurrentSpawnable = null
+			GameManager.CurrentState = GameManager.State.Play
+	
+	if GameManager.CurrentState == GameManager.State.Destroying:
+		if is_instance_valid(CurrentSpawnable):
+			CurrentSpawnable.queue_free()
+			CurrentSpawnable = null
+		if Input.is_action_just_released("LeftMouseButton"):
+			var camera = get_viewport().get_camera()
+			var from = camera.project_ray_origin(get_viewport().get_mouse_position())
+			var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 1000
+			var space_state = get_world().direct_space_state
+			var result = space_state.intersect_ray(from, to, [self])
+			if result.collider.is_in_group("building"):
+				result.collider.runDespawn()
 	pass
 
 func canAfford(obj) -> bool:
